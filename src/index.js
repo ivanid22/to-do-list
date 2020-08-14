@@ -1,3 +1,4 @@
+import './css/bulmaswatch.min.css';
 import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
 import Project from './project';
 import Todo from './todo';

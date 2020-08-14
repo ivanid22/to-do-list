@@ -36,6 +36,7 @@
     "stylelint-scss": "^3.17.2"
   },
   "dependencies": {
-    "@ivanid22/js-event-aggregator": "^0.2.0"
+    "@ivanid22/js-event-aggregator": "^0.2.0",
+    "bulma": "^0.9.0"
   }
 }
