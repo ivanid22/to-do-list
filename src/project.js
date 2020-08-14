@@ -7,22 +7,23 @@ const Project = (projectname) => {
   const todos = [];
   const id = Date.now();
 
+  const getName = () => name;
+  const setName = (val) => { name = val; };
+  const getTodos = () => todos;
+  const getId = () => id;
+
   const addTodo = (todo) => {
     todos.push(todo);
     eventsAggregator.publish('addedTodo', todo);
   };
 
   const getTodo = (id) => {
-    const foundTodo = todos.filter(todo => todo.getId() === id);
+    const foundTodo = todos.find(todo => todo.getId() === id);
     return foundTodo;
   };
 
-  const setName = (val) => {
-    name = val;
-  };
-
   const removeTodo = (id) => {
-    const removeTodo = todos.filter(todo => todo.getId() === id);
+    const removeTodo = todos.find(todo => todo.getId() === id);
     if (removeTodo) {
       todos.splice(todos.indexOf(removeTodo), 1);
       eventsAggregator.publish('removedTodo', ...removeTodo);
@@ -32,12 +33,12 @@ const Project = (projectname) => {
   };
 
   return {
-    name,
-    todos,
-    id,
+    getName,
+    setName,
+    getTodos,
+    getId,
     addTodo,
     removeTodo,
-    setName,
     getTodo,
   };
 };

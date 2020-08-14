@@ -5,20 +5,20 @@ import ChecklistItem from './checklistItem';
 
 const todo1 = Todo('Tarea1');
 const project1 = Project('Proyecto1');
-project1.todos.push(todo1);
 project1.addTodo(todo1);
 
-const events = getAggregatorInstance();
+const eventAggregator = getAggregatorInstance();
 
-events.subscribe('removeTodo', (data) => {
-  console.log('removeTodo');
-  console.log(data);
+eventAggregator.subscribe('addedChecklist', (item) => {
+  console.log('added item');
+  console.log(item);
 });
 
-console.log(project1);
+eventAggregator.subscribe('todoUpdated', (data) => {
+  console.log(project1.getTodo(data));
+});
 
-console.log(project1.removeTodo(todo1.id))
-
-console.log(project1);
-const body = document.querySelector('body'); 
-body.innerHTML = 'Hello wolrd';
+setTimeout(() => {
+  todo1.setTitle('new title');
+  todo1.addCheckListItem(ChecklistItem('item'));
+}, 3000);

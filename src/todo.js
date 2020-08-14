@@ -1,8 +1,10 @@
+import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
+
 const Todo = (todotitle) => {
   const eventsAggregator = getAggregatorInstance();
-  
+
   let title = todotitle;
-  let description = "";
+  let description = '';
   let dueDate = -1;
   let priority = 0;
   let status = false;
@@ -11,19 +13,34 @@ const Todo = (todotitle) => {
   const id = Date.now();
 
   const getTitle = () => title;
-  const setTitle = val => { title = val; };
+  const setTitle = val => {
+    title = val;
+    eventsAggregator.publish('todoUpdated', id);
+  };
 
   const getDescription = () => description;
-  const setDescription = val => { description = val; };
+  const setDescription = val => {
+    description = val;
+    eventsAggregator.publish('todoUpdated', id);
+  };
 
   const getDueDate = () => dueDate;
-  const setDueDate = val => { dueDate = val; };
+  const setDueDate = val => {
+    dueDate = val;
+    eventsAggregator.publish('todoUpdated', id);
+  };
 
   const getPriority = () => priority;
-  const setPriority = val => { priority = val; };
+  const setPriority = val => {
+    priority = val;
+    eventsAggregator.publish('todoUpdated', id);
+  };
 
   const getStatus = () => status;
-  const setStatus = val => { status = val; };
+  const setStatus = val => {
+    status = val;
+    eventsAggregator.publish('todoUpdated', id);
+  };
 
   const addCheckListItem = (checklistItem) => {
     checklists.push(checklistItem);
@@ -31,12 +48,12 @@ const Todo = (todotitle) => {
   };
 
   const getCheckListItem = (id) => {
-    const foundCheckListItem = checklists.filter(checklist => checklist.getId() === id);
+    const foundCheckListItem = checklists.find(checklist => checklist.getId() === id);
     return foundCheckListItem;
   };
 
   const removeCheckListItem = (id) => {
-    const removeCheckList = checklists.filter(checklist => checklist.getId() === id);
+    const removeCheckList = checklists.find(checklist => checklist.getId() === id);
     if (removeCheckList) {
       checklists.splice(checklists.indexOf(removeCheckList), 1);
       eventsAggregator.publish('removedChecklist', ...removeCheckList);
@@ -51,7 +68,7 @@ const Todo = (todotitle) => {
   const setNotes = val => { notes = val; };
 
   const getId = () => id;
- 
+
   return {
     getTitle,
     setTitle,
