@@ -13,7 +13,7 @@ const Project = (projectname) => {
   };
 
   const getTodo = (id) => {
-    const foundTodo = todos.filter(todo => todo.id === id);
+    const foundTodo = todos.filter(todo => todo.getId() === id);
     return foundTodo;
   };
 
@@ -22,7 +22,7 @@ const Project = (projectname) => {
   };
 
   const removeTodo = (id) => {
-    const removeTodo = todos.filter(todo => todo.id === id);
+    const removeTodo = todos.filter(todo => todo.getId() === id);
     if (removeTodo) {
       todos.splice(todos.indexOf(removeTodo), 1);
       eventsAggregator.publish('removedTodo', ...removeTodo);
