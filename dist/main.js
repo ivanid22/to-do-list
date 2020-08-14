@@ -86,6 +86,18 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@ivanid22/js-event-aggregator/index.js":
+/*!*************************************************************!*\
+  !*** ./node_modules/@ivanid22/js-event-aggregator/index.js ***!
+  \*************************************************************/
+/*! exports provided: getAggregatorInstance */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"getAggregatorInstance\", function() { return getAggregatorInstance; });\nconst eventAggregator = () => {\r\n  const _subscribers = {};\r\n  \r\n  const subscribe = (event, callback) => {\r\n    if(!_subscribers[event])\r\n      _subscribers[event] = []\r\n    _subscribers[event].push(callback);\r\n  }\r\n\r\n  const publish = (event, data) => {\r\n    const callbacks = _subscribers[event];\r\n    callbacks.forEach((callback) => {\r\n      callback(data)\r\n    });\r\n  }\r\n\r\n  const unsubscribe = (event, callback) => {\r\n    if(_subscribers[event]) {\r\n      const startingLength = _subscribers[event].length;\r\n      _subscribers[event] = _subscribers[event].filter(cb => cb !== callback);\r\n      return (startingLength - _subscribers[event].length) \r\n    }\r\n    return 0;\r\n  }\r\n\r\n  return {\r\n    subscribe,\r\n    publish,\r\n    unsubscribe\r\n  }\r\n}\r\n\r\nlet instance = null;\r\n\r\nconst getAggregatorInstance = () => {\r\n  if(!instance) {\r\n    instance = eventAggregator();\r\n  }\r\n  return instance;\r\n}\n\n//# sourceURL=webpack:///./node_modules/@ivanid22/js-event-aggregator/index.js?");
+
+/***/ }),
+
 /***/ "./src/checklistItem.js":
 /*!******************************!*\
   !*** ./src/checklistItem.js ***!
@@ -94,7 +106,7 @@
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst checkistItem = (checkistItemtitle) => {\n  let title = checkistItemtitle;\n  let status = false;\n  const id = Date.now();\n  return {\n    title,\n    status,\n    id\n  }\n}\n/* harmony default export */ __webpack_exports__[\"default\"] = (checkistItem);\n\n//# sourceURL=webpack:///./src/checklistItem.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst CheckistItem = (checkistItemtitle) => {\n  let title = checkistItemtitle;\n  let status = false;\n  const id = Date.now();\n  return {\n    title,\n    status,\n    id\n  }\n}\n/* harmony default export */ __webpack_exports__[\"default\"] = (CheckistItem);\n\n//# sourceURL=webpack:///./src/checklistItem.js?");
 
 /***/ }),
 
@@ -106,7 +118,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nconst checkistItem = (checkis
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./project */ \"./src/project.js\");\n/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./todo */ \"./src/todo.js\");\n/* harmony import */ var _checklistItem__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./checklistItem */ \"./src/checklistItem.js\");\n\n\n\n\nconst todo1 = Object(_todo__WEBPACK_IMPORTED_MODULE_1__[\"default\"])('Tarea1')\nconst project1 = Object(_project__WEBPACK_IMPORTED_MODULE_0__[\"default\"])('Proyecto1')\nproject1.todos.push(todo1); \n\nconsole.log(project1);\nconst body = document.querySelector('body'); \nbody.innerHTML = 'Hello wolrd';\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ivanid22_js_event_aggregator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ivanid22/js-event-aggregator */ \"./node_modules/@ivanid22/js-event-aggregator/index.js\");\n/* harmony import */ var _project__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./project */ \"./src/project.js\");\n/* harmony import */ var _todo__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./todo */ \"./src/todo.js\");\n/* harmony import */ var _checklistItem__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./checklistItem */ \"./src/checklistItem.js\");\n\n\n\n\n\nconst todo1 = Object(_todo__WEBPACK_IMPORTED_MODULE_2__[\"default\"])('Tarea1');\nconst project1 = Object(_project__WEBPACK_IMPORTED_MODULE_1__[\"default\"])('Proyecto1');\nproject1.todos.push(todo1);\nproject1.addTodo(todo1);\n\nconst events = Object(_ivanid22_js_event_aggregator__WEBPACK_IMPORTED_MODULE_0__[\"getAggregatorInstance\"])();\n\nevents.subscribe('removeTodo', (data) => {\n  console.log('removeTodo');\n  console.log(data);\n});\n\nconsole.log(project1);\n\nconsole.log(project1.removeTodo(todo1.id))\n\nconsole.log(project1);\nconst body = document.querySelector('body'); \nbody.innerHTML = 'Hello wolrd';\n\n//# sourceURL=webpack:///./src/index.js?");
 
 /***/ }),
 
@@ -118,7 +130,7 @@ eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _pro
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst project = (projectname) => {\n  let name = projectname;\n  const todos = [];\n  const id = Date.now();\n  return {\n    name,\n    todos,\n    id\n  }\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (project);\n\n//# sourceURL=webpack:///./src/project.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _ivanid22_js_event_aggregator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @ivanid22/js-event-aggregator */ \"./node_modules/@ivanid22/js-event-aggregator/index.js\");\n\n\nconst Project = (projectname) => {\n  const eventsAggregator = Object(_ivanid22_js_event_aggregator__WEBPACK_IMPORTED_MODULE_0__[\"getAggregatorInstance\"])();\n  let name = projectname;\n\n  const todos = [];\n  const id = Date.now();\n\n  const addTodo = (todo) => {\n    todos.push(todo);\n    eventsAggregator.publish('addedTodo', todo);\n  };\n\n  const getTodo = (id) => {\n    const foundTodo = todos.filter(todo => todo.id === id);\n    return foundTodo;\n  };\n\n  const setName = (val) => {\n    name = val;\n  };\n\n  const removeTodo = (id) => {\n    const removeTodo = todos.filter(todo => todo.id === id);\n    if (removeTodo) {\n      todos.splice(todos.indexOf(removeTodo), 1);\n      eventsAggregator.publish('removedTodo', ...removeTodo);\n      return true;\n    }\n    return false;\n  };\n\n  return {\n    name,\n    todos,\n    id,\n    addTodo,\n    removeTodo,\n    setName,\n    getTodo,\n  };\n};\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (Project);\n\n//# sourceURL=webpack:///./src/project.js?");
 
 /***/ }),
 
@@ -130,7 +142,7 @@ eval("__webpack_require__.r(__webpack_exports__);\nconst project = (projectname)
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\nconst todo = (todotitle) => {\n  let title = todotitle;\n  let description = \"\";\n  let dueDate = -1;\n  let priority = 0;\n  let status = false;\n  const checklists = [];\n  let notes = \"\";\n  const id = Date.now();\n  return {\n    title,\n    description,\n    dueDate,\n    priority,\n    status,\n    checklists,\n    notes,\n    id\n  }\n}\n/* harmony default export */ __webpack_exports__[\"default\"] = (todo);\n\n\n//# sourceURL=webpack:///./src/todo.js?");
+eval("__webpack_require__.r(__webpack_exports__);\nconst Todo = (todotitle) => {\n  let title = todotitle;\n  let description = \"\";\n  let dueDate = -1;\n  let priority = 0;\n  let status = false;\n  const checklists = [];\n  let notes = \"\";\n  const id = Date.now();\n  return {\n    title,\n    description,\n    dueDate,\n    priority,\n    status,\n    checklists,\n    notes,\n    id\n  }\n}\n/* harmony default export */ __webpack_exports__[\"default\"] = (Todo);\n\n\n//# sourceURL=webpack:///./src/todo.js?");
 
 /***/ })
 

@@ -1,4 +1,4 @@
-const checkistItem = (checkistItemtitle) => {
+const CheckistItem = (checkistItemtitle) => {
   let title = checkistItemtitle;
   let status = false;
   const id = Date.now();
@@ -8,4 +8,4 @@ const checkistItem = (checkistItemtitle) => {
     id
   }
 }
-export default checkistItem
+export default CheckistItem

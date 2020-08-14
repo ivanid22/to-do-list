@@ -1,4 +1,4 @@
-const todo = (todotitle) => {
+const Todo = (todotitle) => {
   let title = todotitle;
   let description = "";
   let dueDate = -1;
@@ -18,4 +18,4 @@ const todo = (todotitle) => {
     id
   }
 }
-export default todo
+export default Todo
