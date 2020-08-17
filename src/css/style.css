@@ -19,3 +19,14 @@
 .checklist-item {
   padding-bottom: 0.5em;
 }
+
+.column-padding {
+  padding: 0 1em;
+}
+
+.title-container{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1em;
+}

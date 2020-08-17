@@ -14,16 +14,32 @@
   
   <div class="columns">
     <div class="column is-3">
-      <h2 class="title is-2">Projects</h2>
-      <aside class="menu">
-        <ul class="menu-list project-container">
-          <li><a>Project 1</a></li>
-          <li><a class="is-active">Project 2</a></li>
-        </ul>
-      </aside>
+      <div class="column-padding">
+        <h2 class="title is-2">Projects</h2>
+        <aside class="menu">
+          <ul class="menu-list project-container">
+            <li><a>Project 1</a></li>
+            <li><a class="is-active">Project 2X</a></li>
+            <br>
+            
+            <div class="field has-addons">
+              <p class="control">
+                <input class="input " type="text" placeholder="New Project">
+              </p>
+              <p class="control">
+                <a class="button is-link">Add</a>
+              </p>
+            </div>
+          </ul>
+        </aside>
+      </div>
+      
     </div>
     <div class="column is-9">
-      <h2 class="title is-2">Todo</h2>
+      <div class="title-container">
+        <h2 class="title is-2">Todo</h2>
+        <button class="button is-small">+</button>
+      </div>
       <div class="todos-container columns is-multiline">
         <div class="card-padding is-3 column">
           <div class="card">
@@ -33,7 +49,8 @@
               </p>
             </header>
             <div class="card-content todo-due-date">
-              <p class="subtitle is-6">Task due <span>important</span></p>
+              <p class="has-text-danger">Important</p>
+              <p class="has-text-grey">Task due</p>
               
             </div>
             <div class="card-content">
@@ -52,99 +69,18 @@
                 <input type="checkbox">
                 Remember me
               </label>
+              <div class="field has-addons hidden">
+                <p class="control"><input class="input is-small" type="text" placeholder="New checkbox"></p>
+                <p class="control"><a class="button is-small">Add</a>
+                </p>
+              </div>
             </div>
           </div>
         </div>
         <div class="card-padding is-3 column">
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                First To-do
-              </p>
-            </header>
-            <div class="card-content todo-due-date">
-              <p class="subtitle is-6">Task due <span>important</span></p>
-              
-            </div>
-            <div class="card-content">
-              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque excepturi adipisci solut</p>
-            </div>
-            <div class="card-content checklist-container">
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-            </div>
-          </div>
+    
         </div>
-        <div class="card-padding is-3 column">
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                First To-do
-              </p>
-            </header>
-            <div class="card-content todo-due-date">
-              <p class="subtitle is-6">Task due <span>important</span></p>
-              
-            </div>
-            <div class="card-content">
-              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque excepturi adipisci solut</p>
-            </div>
-            <div class="card-content checklist-container">
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="card-padding is-3 column">
-          <div class="card">
-            <header class="card-header">
-              <p class="card-header-title">
-                First To-do
-              </p>
-            </header>
-            <div class="card-content todo-due-date">
-              <p class="subtitle is-6">Task due <span>important</span></p>
-              
-            </div>
-            <div class="card-content">
-              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque excepturi adipisci solut</p>
-            </div>
-            <div class="card-content checklist-container">
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-              <label class="checkbox checklist-item">
-                <input type="checkbox">
-                Remember me
-              </label>
-            </div>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>
