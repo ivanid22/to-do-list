@@ -2,6 +2,7 @@ import './css/bulmaswatch.min.css';
 import './css/style.css'
 import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
 import Project from './project';
+import moment from 'moment';
 import Todo from './todo';
 import ChecklistItem from './checklistItem';
 
@@ -9,6 +10,9 @@ const projects = [];
 
 const eventAggregator = getAggregatorInstance();
 
+window.moment = moment;
+
+console.log(moment().format('MMMM Do YYYY, h:mm:ss a'));
 
 const renderProjects = () => {
   let projectContainer = document.querySelector('#projectContainer')
