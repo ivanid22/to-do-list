@@ -13,10 +13,19 @@ const displayModule = (() => {
     projects.forEach(element => {
       const projectLi = document.createElement('li');
       const projectA = document.createElement('a');
+      const projectDel = document.createElement('button');
       projectA.textContent = element.getName();
+      projectDel.classList = 'delete delete-project-button';
+      projectLi.classList = 'project-name';
       projectLi.setAttribute('data-attribute', element.getId());
-      projectLi.appendChild(projectA);
+      projectLi.append(projectA, projectDel);
       projectContainer.appendChild(projectLi);
+
+      projectDel.onclick = () => {
+        const parent = projectDel.parentElement.attributes[1].value
+        console.log(parent);
+        eventAggregator.publish('deleteProject', parent);
+      };
     });
   };
 
@@ -28,11 +37,11 @@ const displayModule = (() => {
         itemInput.classList.remove('is-danger');
         eventAggregator.publish('createNewProject', itemInput.value);
         itemInput.value = '';
-      }
-      else {
+      } else {
         itemInput.classList.add('is-danger');
       }
     };
+    
   };
 
   return {
