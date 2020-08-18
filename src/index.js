@@ -24,6 +24,11 @@ const deleteProject = (id) => {
   projects.splice(index, 1);
 };
 
+const findProjectbyId = (id) => {
+  const found = projects.find(project => project.getId() === id);
+  return found;
+};
+
 eventAggregator.subscribe('createdNewProject', (val) => {
   const newProject = Project(val);
   projects.push(newProject);
@@ -42,7 +47,13 @@ eventAggregator.subscribe('deletedProject', (val) => {
 eventAggregator.subscribe('selectedProject', (id) => {
   activeProjectId = id;
   window.activeProjectId = id;
+  displayModule.displayProjectTitle(findProjectbyId(id).getName());
 });
+
+eventAggregator.subscribe('clickedNewTodo', () => {
+  console.log('>>>>>>>>>> New todo!');
+});
+
 
 window.onload = () => {
   //displayModule.renderProjects(projects);

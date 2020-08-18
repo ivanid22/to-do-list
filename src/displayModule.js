@@ -14,6 +14,11 @@ const displayModule = (() => {
     });
   };
 
+  const displayProjectTitle = (val) => {
+    const titleElement = document.querySelector('.selected-project-title')
+    titleElement.textContent = val;
+  };
+
   const renderProjects = (projects, activeProjectId) => {
     const projectContainer = document.querySelector('.project-container');
     projectContainer.innerHTML = '';
@@ -56,11 +61,16 @@ const displayModule = (() => {
         itemInput.classList.add('is-danger');
       }
     };
+    const newTodoButton = document.querySelector('.add-todo-button');
+    newTodoButton.onclick = () => {
+      eventAggregator.publish('clickedNewTodo');
+    };
   };
 
   return {
     initListeners,
     renderProjects,
+    displayProjectTitle,
   };
 })();
 
