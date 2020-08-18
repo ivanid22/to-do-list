@@ -4,10 +4,9 @@ import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
 import moment from 'moment';
 import Project from './project';
 import displayModule from './displayModule';
-import Todo from './todo';
-import ChecklistItem from './checklistItem';
 
 const projects = [];
+let activeProjectId;
 
 const eventAggregator = getAggregatorInstance();
 
@@ -16,8 +15,7 @@ window.moment = moment;
 const deleteProject = (id) => {
   let index = null;
   projects.forEach(project => {
-    
-    if (project.getId() === parseInt(id)) {
+    if (project.getId() === parseInt(id, 10)) {
       index = projects.indexOf(project);
       console.log(index);
     }
@@ -26,18 +24,29 @@ const deleteProject = (id) => {
   projects.splice(index, 1);
 };
 
-eventAggregator.subscribe('createNewProject', (val) => {
-  projects.push(Project(val));
-  displayModule.renderProjects(projects);
+eventAggregator.subscribe('createdNewProject', (val) => {
+  const newProject = Project(val);
+  projects.push(newProject);
+  eventAggregator.publish('selectedProject', newProject.getId());
+  displayModule.renderProjects(projects, activeProjectId);
 });
 
-eventAggregator.subscribe('deleteProject', (val) => {
+eventAggregator.subscribe('deletedProject', (val) => {
+  const pid = parseInt(val, 10);
   deleteProject(val);
-  displayModule.renderProjects(projects);
+  if (projects.length === 0) activeProjectId = null;
+  if (pid === activeProjectId) activeProjectId = projects[projects.length - 1].getId();
+  displayModule.renderProjects(projects, activeProjectId);
+});
+
+eventAggregator.subscribe('selectedProject', (id) => {
+  activeProjectId = id;
+  window.activeProjectId = id;
 });
 
 window.onload = () => {
   //displayModule.renderProjects(projects);
   displayModule.initListeners();
   window.projects = projects;
+  window.activeProjectId = activeProjectId;
 };
