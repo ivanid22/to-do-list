@@ -1,12 +1,6 @@
-/*.card {
-  width: 40%;
-}*/
-
-.todos-container{
-  /* display: flex;
-  flex-wrap: nowrap; */
-  /* overflow: scroll */
-} 
+body{
+  padding-top: 1em;
+}
 
 .checklist-item {
   width: 100%;
@@ -14,6 +8,15 @@
 
 .card-content {
   padding-top: 0;
+}
+
+.project-name {
+  display: flex;
+  justify-content: stretch;
+}
+
+.project-name > a {
+  width: 100%;
 }
 
 .checklist-item {
