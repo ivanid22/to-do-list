@@ -11,10 +11,15 @@ const ProjectCollection = () => {
 
   const addProject = (project) => {
     projects.push(project);
+    activeProject = project;
   };
 
   const removeProject = (project) => {
     projects.splice(projects.indexOf(project), 1);
+    if (activeProject === project) {
+      if (projects.length > 0) activeProject = projects[projects.length - 1];
+      else activeProject = null;
+    }
   };
 
   const updateProject = (id, fields) => {

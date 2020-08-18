@@ -89,7 +89,7 @@
       <div class="field">
         <label class="label">Title</label>
         <div class="control">
-          <input class="input" type="text" placeholder="Title">
+          <input class="input new-todo-title" type="text" placeholder="Title">
         </div>
       </div>
       
@@ -97,14 +97,14 @@
       <div class="field">
         <label class="label">Decription</label>
         <div class="control">
-          <textarea class="textarea" placeholder="To-do description"></textarea>
+          <textarea class="textarea new-todo-desc" placeholder="To-do description"></textarea>
         </div>
       </div>
       
       <div class="field">
         <label class="label">Due date</label>
         <div class="control">
-          <input class="input" type="datetime-local">
+          <input class="input new-todo-date" type="datetime-local">
         </div>
       </div>
 
@@ -112,7 +112,7 @@
         <label class="label">Priority</label>
         <div class="control">
           <div class="select">
-            <select>
+            <select class="new-todo-priority">
               <option value="1">Too Important</option>
               <option value="2">Important</option>
               <option value="3">Meaningless</option>
@@ -123,15 +123,15 @@
 
       <div class="field is-grouped">
         <div class="control">
-          <button class="button is-link">Submit</button>
+          <button class="button is-link add-todo-button">Submit</button>
         </div>
         <div class="control">
-          <button class="button is-link is-light">Cancel</button>
+          <button class="button is-link is-light close-todo-modal">Cancel</button>
         </div>
       </div>
 
       
-    <button class="modal-close is-large" aria-label="close"></button>
+    <button class="modal-close is-large close-todo-modal" aria-label="close"></button>
   </div>
 
 </body>

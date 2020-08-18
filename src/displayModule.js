@@ -67,6 +67,26 @@ const displayModule = (() => {
     };
   };
 
+  const newTodoModalListeners = () => {
+    const newTodoTitle = document.querySelector('.new-todo-title');
+    const newTodoDescription = document.querySelector('.new-todo-desc');
+    const newTodoDate = document.querySelector('.new-todo-date');
+    const newTodoPriority = document.querySelector('.new-todo-priority');
+    const addTodoButton = document.querySelector('.add-todo-button');
+    const closeTodoModal = document.querySelector('.close-todo-modal');
+    addTodoButton.onclick = () => {
+      if (validInput(newTodoTitle.value)) {
+        eventAggregator.publish('submitedTodo', {
+          title: newTodoTitle.value,
+          description: newTodoDescription.value,
+          date: newTodoDate.value,
+          priority: newTodoPriority.value,
+        });
+      }
+    };
+    closeTodoModal.onclick = () => { eventAggregator.publish('closedTodoModal'); };
+  };
+
   return {
     initListeners,
     renderProjects,
