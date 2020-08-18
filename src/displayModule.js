@@ -7,6 +7,22 @@ const displayModule = (() => {
     return /.+/.test(val);
   };
 
+  const resetNewTodoFields = () => {
+    const fields = document.querySelectorAll('.new-todo-field');
+    fields.forEach(field => {
+      field.value = '';
+    });
+    document.querySelector('.new-todo-priority').selectedIndex = 0;
+  };
+
+  const showValidationError = (element, message) => {
+    const errorContainer = element.parentElement.parentElement;
+    const errorMessage = document.createElement('p');
+    errorMessage.classList = 'help is-danger todo-validation-error';
+    errorMessage.textContent = message;
+    errorContainer.appendChild(errorMessage);
+  };
+
   const resetActiveProject = () => {
     const elements = document.querySelectorAll('.project-name > a');
     elements.forEach(element => {
@@ -49,6 +65,30 @@ const displayModule = (() => {
     });
   };
 
+  const newTodoModalListeners = () => {
+    const newTodoTitle = document.querySelector('.new-todo-title');
+    const newTodoDescription = document.querySelector('.new-todo-desc');
+    const newTodoDate = document.querySelector('.new-todo-date');
+    const newTodoPriority = document.querySelector('.new-todo-priority');
+    const submitTodoButton = document.querySelector('.submit-todo-button');
+    const closeTodoModal = document.querySelectorAll('.close-todo-modal');
+    showValidationError(newTodoTitle, 'Title cannot be empty');
+    submitTodoButton.onclick = () => {
+      if (validInput(newTodoTitle.value)) {
+        eventAggregator.publish('submitedTodo', {
+          title: newTodoTitle.value,
+          description: newTodoDescription.value,
+          date: newTodoDate.value,
+          priority: newTodoPriority.value,
+        });
+        eventAggregator.publish('closedTodoModal');
+      }
+    };
+    closeTodoModal.forEach(button => {
+      button.onclick = () => { eventAggregator.publish('closedTodoModal'); };
+    });
+  };
+
   const initListeners = () => {
     const itemButton = document.querySelector('.add-project-button');
     const itemInput = document.querySelector('.add-project-input');
@@ -63,28 +103,10 @@ const displayModule = (() => {
     };
     const newTodoButton = document.querySelector('.add-todo-button');
     newTodoButton.onclick = () => {
+      resetNewTodoFields();
       eventAggregator.publish('clickedNewTodo');
     };
-  };
-
-  const newTodoModalListeners = () => {
-    const newTodoTitle = document.querySelector('.new-todo-title');
-    const newTodoDescription = document.querySelector('.new-todo-desc');
-    const newTodoDate = document.querySelector('.new-todo-date');
-    const newTodoPriority = document.querySelector('.new-todo-priority');
-    const addTodoButton = document.querySelector('.add-todo-button');
-    const closeTodoModal = document.querySelector('.close-todo-modal');
-    addTodoButton.onclick = () => {
-      if (validInput(newTodoTitle.value)) {
-        eventAggregator.publish('submitedTodo', {
-          title: newTodoTitle.value,
-          description: newTodoDescription.value,
-          date: newTodoDate.value,
-          priority: newTodoPriority.value,
-        });
-      }
-    };
-    closeTodoModal.onclick = () => { eventAggregator.publish('closedTodoModal'); };
+    newTodoModalListeners();
   };
 
   return {
