@@ -6,7 +6,6 @@ import Project from './project';
 import displayModule from './displayModule';
 import Todo from './todo';
 import ChecklistItem from './checklistItem';
-import { CLIEngine } from 'eslint';
 
 const projects = [];
 
@@ -15,13 +14,16 @@ const eventAggregator = getAggregatorInstance();
 window.moment = moment;
 
 const deleteProject = (id) => {
+  let index = null;
   projects.forEach(project => {
-    console.log(project.getId());
-    if (project.getId() === id) {
-      const index = projects.indexOf(project);
-      projects.splice(index, 1);
+    
+    if (project.getId() === parseInt(id)) {
+      index = projects.indexOf(project);
+      console.log(index);
     }
   });
+  console.log(`Index to delete: ${index}`)
+  projects.splice(index, 1);
 };
 
 eventAggregator.subscribe('createNewProject', (val) => {

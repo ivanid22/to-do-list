@@ -23,7 +23,7 @@ const displayModule = (() => {
 
       projectDel.onclick = () => {
         const parent = projectDel.parentElement.attributes[1].value
-        console.log(parent);
+        console.log(`Data attribute: ${parent}`);
         eventAggregator.publish('deleteProject', parent);
       };
     });
