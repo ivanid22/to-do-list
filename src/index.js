@@ -17,10 +17,10 @@ window.moment = moment;
 const deleteProject = (id) => {
   projects.forEach(project => {
     console.log(project.getId());
-    // if (project.getId() === id) {
-    //   const index = projects.indexOf(project);
-    //   projects.splice(index, 1);
-    // }
+    if (project.getId() === id) {
+      const index = projects.indexOf(project);
+      projects.splice(index, 1);
+    }
   });
 };
 
