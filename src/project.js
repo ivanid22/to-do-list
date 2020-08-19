@@ -26,7 +26,7 @@ const Project = (projectname) => {
     const removeTodo = todos.find(todo => todo.getId() === id);
     if (removeTodo) {
       todos.splice(todos.indexOf(removeTodo), 1);
-      eventsAggregator.publish('removedTodo', ...removeTodo);
+      // eventsAggregator.publish('removedTodo', ...removeTodo);
       return true;
     }
     return false;

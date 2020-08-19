@@ -60,7 +60,6 @@ const displayModule = (() => {
 
       projectDel.onclick = () => {
         const parent = projectDel.parentElement.attributes[1].value
-        console.log(`Data attribute: ${parent}`);
         eventAggregator.publish('deletedProject', parent);
       };
     });
@@ -71,6 +70,23 @@ const displayModule = (() => {
     newDiv.classList = classes;
     if (content) newDiv.innerHTML = content;
     return newDiv;
+  };
+
+  const renderChecklistForm = (todo) => {
+    const inputField = createDOMElement('field has-addons', 'div');
+    const inputControl = createDOMElement('control', 'p');
+    const buttonControl = createDOMElement('control', 'p');
+    const input = createDOMElement('input is-small', 'input');
+    input.setAttribute('type', 'text');
+    input.setAttribute('placeholder', 'New Checkitem');
+    const button = createDOMElement('button is-small', 'a', 'Add');
+    button.onclick = () => {
+      eventAggregator.publish('newChecklistClicked', { todo, title: input.value });
+    };
+    inputControl.append(input);
+    buttonControl.append(button);
+    inputField.append(inputControl, buttonControl);
+    return inputField;
   };
 
   const renderChecklistItems = (todo, target) => {
@@ -85,8 +101,9 @@ const displayModule = (() => {
       };
       label.append(checkboxInput, labelContent);
       checklistContainer.appendChild(label);
-      target.appendChild(checklistContainer);
     });
+    checklistContainer.appendChild(renderChecklistForm(todo));
+    target.appendChild(checklistContainer);
   };
 
   const renderTodo = (todo) => {
@@ -102,9 +119,12 @@ const displayModule = (() => {
     const todoDescription = createDOMElement('card-content', 'div');
     const todoDescriptionText = createDOMElement('', 'p', todo.getDescription());
 
+    const deleteTodo = createDOMElement('delete delete-todo-button', 'button');
+    deleteTodo.onclick = () => { eventAggregator.publish('clickedDeleteTodo', todo); };
+
     todoDescription.append(todoDescriptionText);
     todoInfo.append(todoPriority, todoDueDate);
-    cardHeader.append(cardTitle);
+    cardHeader.append(cardTitle, deleteTodo);
     card.append(cardHeader, todoInfo, todoDescription);
     cardPad.append(card);
     renderChecklistItems(todo, card);

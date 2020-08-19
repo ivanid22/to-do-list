@@ -1,14 +1,13 @@
 import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
-import getCollectionInstance from './ProjectCollection';
 import moment from 'moment';
+import getCollectionInstance from './ProjectCollection';
 import Project from './project';
 import Todo from './todo';
 import displayModule from './displayModule';
+import ChecklistItem from './checklistItem';
 
 const projects = getCollectionInstance();
 const eventAggregator = getAggregatorInstance();
-
-console.log('running');
 
 eventAggregator.subscribe('createdNewProject', (val) => {
   const newProject = Project(val);
@@ -56,5 +55,16 @@ eventAggregator.subscribe('submitedTodo', (data) => {
 });
 
 eventAggregator.subscribe('addedTodo', () => {
+  displayModule.renderTodos(projects.getActiveProject());
+});
+
+eventAggregator.subscribe('newChecklistClicked', (data) => {
+  const newChecklistItem = ChecklistItem(data.title);
+  data.todo.addCheckListItem(newChecklistItem);
+  displayModule.renderTodos(projects.getActiveProject());
+});
+
+eventAggregator.subscribe('clickedDeleteTodo', (todo) => {
+  projects.getActiveProject().removeTodo(todo.getId());
   displayModule.renderTodos(projects.getActiveProject());
 });
