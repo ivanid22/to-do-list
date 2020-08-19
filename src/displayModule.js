@@ -65,6 +65,43 @@ const displayModule = (() => {
     });
   };
 
+  const createDOMElement = (classes, type, content) => {
+    const newDiv = document.createElement(type);
+    newDiv.classList = classes;
+    if (content) newDiv.innerHTML = content;
+    return newDiv;
+  };
+
+  
+  
+  const renderTodo = (todo) => {
+    const cardPad = createDOMElement('card-padding is-3 column', 'div');
+    const card = createDOMElement('card', 'div');
+    const cardHeader = createDOMElement('card-header', 'header');
+    const cardTitle = createDOMElement('card-header-title','p', todo.getTitle());
+
+    const todoInfo = createDOMElement('card-content todo-due-date', 'div');
+    const todoPriority = createDOMElement('has-text-danger', 'p', todo.getPriority());
+    const todoDueDate = createDOMElement('has-text-grey', 'p', todo.getDueDate());
+
+    const todoDescription = createDOMElement('card-content', 'div');
+    const todoDescriptionText = createDOMElement('', 'p', todo.getDescription());
+
+    todoDescription.append(todoDescriptionText);
+    todoInfo.append(todoPriority, todoDueDate);
+    cardHeader.append(cardTitle);
+    card.append(cardHeader, todoInfo, todoDescription);
+    cardPad.append(card);
+    document.querySelector('.todos-container').appendChild(cardPad);
+  };
+
+  const renderTodos = (project) => {
+    document.querySelector('.todos-container').innerHTML = '';
+    project.getTodos().forEach((todo) => {
+      renderTodo(todo);
+    });
+  };
+
   const newTodoModalListeners = () => {
     const newTodoTitle = document.querySelector('.new-todo-title');
     const newTodoDescription = document.querySelector('.new-todo-desc');
@@ -78,7 +115,7 @@ const displayModule = (() => {
         eventAggregator.publish('submitedTodo', {
           title: newTodoTitle.value,
           description: newTodoDescription.value,
-          date: newTodoDate.value,
+          duedate: newTodoDate.value,
           priority: newTodoPriority.value,
         });
         eventAggregator.publish('closedTodoModal');
@@ -112,6 +149,7 @@ const displayModule = (() => {
   return {
     initListeners,
     renderProjects,
+    renderTodos,
     displayProjectTitle,
   };
 })();

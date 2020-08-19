@@ -1,6 +1,7 @@
 import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
 import getCollectionInstance from './ProjectCollection';
 import Project from './project';
+import Todo from './todo';
 import displayModule from './displayModule';
 
 const projects = getCollectionInstance();
@@ -32,15 +33,26 @@ eventAggregator.subscribe('selectedProject', (id) => {
 });
 
 eventAggregator.subscribe('clickedNewTodo', () => {
-  console.log('>> open Modal');
   document.querySelector('.new-todo-modal').classList.add('is-active');
 });
 
 eventAggregator.subscribe('clickedNewTodo', () => {
-  console.log('>>>>>>>>>> New todo!');
 });
 
 eventAggregator.subscribe('closedTodoModal', () => {
-  console.log('>> close Modal');
   document.querySelector('.new-todo-modal').classList.remove('is-active');
+});
+
+eventAggregator.subscribe('submitedTodo', (data) => {
+  const newTodo = Todo(data.title);
+  newTodo.setDescription(data.description);
+  newTodo.setDueDate(data.duedate);
+  newTodo.setPriority(data.priority);
+  if (projects.getActiveProject()) {
+    projects.getActiveProject().addTodo(newTodo);
+  }
+});
+
+eventAggregator.subscribe('addedTodo', () => {
+  displayModule.renderTodos(projects.getActiveProject());
 });
