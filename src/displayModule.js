@@ -1,4 +1,5 @@
 import { getAggregatorInstance } from "@ivanid22/js-event-aggregator";
+import moment from 'moment';
 
 const displayModule = (() => {
   const eventAggregator = getAggregatorInstance();
@@ -72,8 +73,22 @@ const displayModule = (() => {
     return newDiv;
   };
 
-  
-  
+  const renderChecklistItems = (todo, target) => {
+    const checklistContainer = createDOMElement('card-content checklist-container', 'div');
+    todo.getAllChecklistItems().forEach(checklistItem => {
+      const label = createDOMElement('checkbox checklist-item', 'label');
+      const checkboxInput = createDOMElement('', 'input');
+      checkboxInput.setAttribute('type', 'checkbox');
+      const labelContent = createDOMElement('', 'span', checklistItem.getTitle());
+      checkboxInput.onChange = () => {
+        eventAggregator.publish('checkboxChanged', checkboxInput.checked);
+      };
+      label.append(checkboxInput, labelContent);
+      checklistContainer.appendChild(label);
+      target.appendChild(checklistContainer);
+    });
+  };
+
   const renderTodo = (todo) => {
     const cardPad = createDOMElement('card-padding is-3 column', 'div');
     const card = createDOMElement('card', 'div');
@@ -81,8 +96,8 @@ const displayModule = (() => {
     const cardTitle = createDOMElement('card-header-title','p', todo.getTitle());
 
     const todoInfo = createDOMElement('card-content todo-due-date', 'div');
-    const todoPriority = createDOMElement('has-text-danger', 'p', todo.getPriority());
-    const todoDueDate = createDOMElement('has-text-grey', 'p', todo.getDueDate());
+    const todoPriority = createDOMElement('has-text-danger', 'p', todo.getPriorityString());
+    const todoDueDate = createDOMElement('has-text-grey', 'p', 'Due '.concat(moment(todo.getDueDate()).fromNow()));
 
     const todoDescription = createDOMElement('card-content', 'div');
     const todoDescriptionText = createDOMElement('', 'p', todo.getDescription());
@@ -92,11 +107,16 @@ const displayModule = (() => {
     cardHeader.append(cardTitle);
     card.append(cardHeader, todoInfo, todoDescription);
     cardPad.append(card);
+    renderChecklistItems(todo, card);
     document.querySelector('.todos-container').appendChild(cardPad);
   };
 
   const renderTodos = (project) => {
-    document.querySelector('.todos-container').innerHTML = '';
+    const todosContainer = document.querySelector('.todos-container');
+    todosContainer.innerHTML = '';
+    if (project.getTodos().length < 1) {
+      todosContainer.innerHTML = '<h1>Click on + to add a new to-do</h1>';
+    }
     project.getTodos().forEach((todo) => {
       renderTodo(todo);
     });

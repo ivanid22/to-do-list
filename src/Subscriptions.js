@@ -1,5 +1,6 @@
 import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
 import getCollectionInstance from './ProjectCollection';
+import moment from 'moment';
 import Project from './project';
 import Todo from './todo';
 import displayModule from './displayModule';
@@ -29,6 +30,7 @@ eventAggregator.subscribe('selectedProject', (id) => {
   else {
     projects.setActiveProject(projects.getProject(id));
     displayModule.displayProjectTitle(projects.getProject(id).getName());
+    displayModule.renderTodos(projects.getActiveProject());
   }
 });
 
@@ -46,8 +48,8 @@ eventAggregator.subscribe('closedTodoModal', () => {
 eventAggregator.subscribe('submitedTodo', (data) => {
   const newTodo = Todo(data.title);
   newTodo.setDescription(data.description);
-  newTodo.setDueDate(data.duedate);
-  newTodo.setPriority(data.priority);
+  newTodo.setDueDate(moment(data.duedate).valueOf());
+  newTodo.setPriority(parseInt(data.priority, 10));
   if (projects.getActiveProject()) {
     projects.getActiveProject().addTodo(newTodo);
   }

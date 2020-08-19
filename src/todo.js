@@ -62,6 +62,22 @@ const Todo = (todotitle) => {
     return false;
   };
 
+  const getPriorityString = () => {
+    console.log(typeof (priority));
+    switch (priority) {
+      case 1:
+        return 'Low';
+      case 2:
+        return 'Medium';
+      case 3:
+        return 'High';
+      case 4:
+        return 'Critical';
+      default:
+        return 'Undefined';
+    }
+  };
+
   const getAllChecklistItems = () => checklists;
 
   const getNotes = () => notes;
@@ -87,6 +103,7 @@ const Todo = (todotitle) => {
     getNotes,
     setNotes,
     getId,
+    getPriorityString,
   };
 };
 
