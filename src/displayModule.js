@@ -4,8 +4,13 @@ import moment from 'moment';
 const displayModule = (() => {
   const eventAggregator = getAggregatorInstance();
 
-  const validInput = (val) => {
+  const validTitle = (val) => {
     return /.+/.test(val);
+  };
+
+  const validDate = (dateString) => {
+    const date = moment(dateString).valueOf();
+    return (date && (moment().startOf('day').valueOf() < date));
   };
 
   const resetNewTodoFields = () => {
@@ -16,8 +21,17 @@ const displayModule = (() => {
     document.querySelector('.new-todo-priority').selectedIndex = 0;
   };
 
+  const clearTodoValidationMessages = () => {
+    const errors = document.querySelectorAll('.todo-validation-error');
+    errors.forEach(error => {
+      error.remove();
+    });
+  };
+
   const showValidationError = (element, message) => {
     const errorContainer = element.parentElement.parentElement;
+    const existingError = errorContainer.querySelector('.todo-validation-error');
+    if (existingError) existingError.remove();
     const errorMessage = document.createElement('p');
     errorMessage.classList = 'help is-danger todo-validation-error';
     errorMessage.textContent = message;
@@ -95,9 +109,14 @@ const displayModule = (() => {
       const label = createDOMElement('checkbox checklist-item', 'label');
       const checkboxInput = createDOMElement('', 'input');
       checkboxInput.setAttribute('type', 'checkbox');
+      checkboxInput.checked = checklistItem.getStatus();
       const labelContent = createDOMElement('', 'span', checklistItem.getTitle());
-      checkboxInput.onChange = () => {
-        eventAggregator.publish('checkboxChanged', checkboxInput.checked);
+      checkboxInput.onchange = () => {
+        eventAggregator.publish('checkboxChanged', {
+          todo,
+          checklistItem,
+          checked: checkboxInput.checked,
+        });
       };
       label.append(checkboxInput, labelContent);
       checklistContainer.appendChild(label);
@@ -149,16 +168,19 @@ const displayModule = (() => {
     const newTodoPriority = document.querySelector('.new-todo-priority');
     const submitTodoButton = document.querySelector('.submit-todo-button');
     const closeTodoModal = document.querySelectorAll('.close-todo-modal');
-    showValidationError(newTodoTitle, 'Title cannot be empty');
     submitTodoButton.onclick = () => {
-      if (validInput(newTodoTitle.value)) {
-        eventAggregator.publish('submitedTodo', {
+      if (validTitle(newTodoTitle.value) && validDate(newTodoDate.value)) {
+        eventAggregator.publish('submittedTodo', {
           title: newTodoTitle.value,
           description: newTodoDescription.value,
           duedate: newTodoDate.value,
           priority: newTodoPriority.value,
         });
         eventAggregator.publish('closedTodoModal');
+      } else {
+        clearTodoValidationMessages();
+        if (!validDate(newTodoDate.value)) showValidationError(newTodoDate, 'Due date cannot be empty or in the past');
+        if (!validTitle(newTodoTitle.value)) showValidationError(newTodoTitle, 'Title cannot be empty');
       }
     };
     closeTodoModal.forEach(button => {
@@ -170,7 +192,7 @@ const displayModule = (() => {
     const itemButton = document.querySelector('.add-project-button');
     const itemInput = document.querySelector('.add-project-input');
     itemButton.onclick = () => {
-      if (validInput(itemInput.value)) {
+      if (validTitle(itemInput.value)) {
         itemInput.classList.remove('is-danger');
         eventAggregator.publish('createdNewProject', itemInput.value);
         itemInput.value = '';

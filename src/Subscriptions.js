@@ -44,7 +44,7 @@ eventAggregator.subscribe('closedTodoModal', () => {
   document.querySelector('.new-todo-modal').classList.remove('is-active');
 });
 
-eventAggregator.subscribe('submitedTodo', (data) => {
+eventAggregator.subscribe('submittedTodo', (data) => {
   const newTodo = Todo(data.title);
   newTodo.setDescription(data.description);
   newTodo.setDueDate(moment(data.duedate).valueOf());
@@ -66,5 +66,10 @@ eventAggregator.subscribe('newChecklistClicked', (data) => {
 
 eventAggregator.subscribe('clickedDeleteTodo', (todo) => {
   projects.getActiveProject().removeTodo(todo.getId());
+  displayModule.renderTodos(projects.getActiveProject());
+});
+
+eventAggregator.subscribe('checkboxChanged', (data) => {
+  data.checklistItem.toggleStatus();
   displayModule.renderTodos(projects.getActiveProject());
 });

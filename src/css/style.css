@@ -33,3 +33,7 @@ body{
   justify-content: space-between;
   padding: 0 1em;
 }
+
+i {
+  cursor: pointer;
+}

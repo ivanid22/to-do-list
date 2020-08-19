@@ -10,6 +10,7 @@ const CheckistItem = (checkistItemtitle) => {
     title = val;
     eventAggregator.publish('checklistItemUpdated', id);
   };
+
   const getTitle = () => title;
   const toggleStatus = () => {
     status = !status;
