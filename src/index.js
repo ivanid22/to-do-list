@@ -39,6 +39,7 @@ const findProjectbyId = (id) => {
 window.onload = () => {
   //displayModule.renderProjects(projects);
   displayModule.initListeners();
+  eventAggregator.publish('appInitialized');
   window.projects = projects;
   window.eventAggregator = eventAggregator;
 };

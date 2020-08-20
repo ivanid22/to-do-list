@@ -9,9 +9,14 @@ import ChecklistItem from './checklistItem';
 const projects = getCollectionInstance();
 const eventAggregator = getAggregatorInstance();
 
+eventAggregator.subscribe('appInitialized', () => {
+  projects.fetchLocalStorageData();
+});
+
 eventAggregator.subscribe('createdNewProject', (val) => {
   const newProject = Project(val);
   projects.addProject(newProject);
+  projects.updateLocalStorage();
   eventAggregator.publish('selectedProject', newProject.getId());
   displayModule.renderProjects(projects.getProjects(), projects.getActiveProject().getId());
 });
@@ -19,6 +24,7 @@ eventAggregator.subscribe('createdNewProject', (val) => {
 eventAggregator.subscribe('deletedProject', (val) => {
   const pid = parseInt(val, 10);
   projects.removeProject(projects.getProject(pid));
+  projects.updateLocalStorage();
   const activeId = projects.getActiveProject() ? projects.getActiveProject().getId() : null;
   displayModule.renderProjects(projects.getProjects(), activeId);
   eventAggregator.publish('selectedProject', activeId);
@@ -28,6 +34,7 @@ eventAggregator.subscribe('selectedProject', (id) => {
   if (id == null) displayModule.displayProjectTitle('');
   else {
     projects.setActiveProject(projects.getProject(id));
+    projects.updateLocalStorage();
     displayModule.displayProjectTitle(projects.getProject(id).getName());
     displayModule.renderTodos(projects.getActiveProject());
   }
@@ -52,6 +59,7 @@ eventAggregator.subscribe('submittedTodo', (data) => {
   if (projects.getActiveProject()) {
     projects.getActiveProject().addTodo(newTodo, true);
   }
+  projects.updateLocalStorage();
 });
 
 eventAggregator.subscribe('addedTodo', () => {
@@ -66,11 +74,13 @@ eventAggregator.subscribe('newChecklistClicked', (data) => {
 
 eventAggregator.subscribe('clickedDeleteTodo', (todo) => {
   projects.getActiveProject().removeTodo(todo.getId());
+  projects.updateLocalStorage();
   displayModule.renderTodos(projects.getActiveProject());
 });
 
 eventAggregator.subscribe('checkboxChanged', (data) => {
   data.checklistItem.toggleStatus();
+  projects.updateLocalStorage();
   displayModule.renderTodos(projects.getActiveProject());
 });
 
