@@ -88,18 +88,29 @@ const displayModule = (() => {
 
   const renderChecklistForm = (todo) => {
     const inputField = createDOMElement('field has-addons', 'div');
-    const inputControl = createDOMElement('control', 'p');
-    const buttonControl = createDOMElement('control', 'p');
+    const inputControl = createDOMElement('control hidden', 'p');
+    const buttonControl = createDOMElement('control hidden', 'p');
     const input = createDOMElement('input is-small', 'input');
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'New Checkitem');
     const button = createDOMElement('button is-small', 'a', 'Add');
+    
+    const showForm = createDOMElement('button is-small', 'a', '+');
+    showForm.onclick = () => {
+      showForm.classList.toggle('hidden');
+      inputControl.classList.toggle('hidden');
+      buttonControl.classList.toggle('hidden');
+    };
+
     button.onclick = () => {
+      showForm.classList.toggle('hidden');
+      inputControl.classList.toggle('hidden');
+      buttonControl.classList.toggle('hidden');
       eventAggregator.publish('newChecklistClicked', { todo, title: input.value });
     };
     inputControl.append(input);
     buttonControl.append(button);
-    inputField.append(inputControl, buttonControl);
+    inputField.append(showForm, inputControl, buttonControl);
     return inputField;
   };
 
@@ -121,7 +132,8 @@ const displayModule = (() => {
       label.append(checkboxInput, labelContent);
       checklistContainer.appendChild(label);
     });
-    checklistContainer.appendChild(renderChecklistForm(todo));
+    const CheckListForm = renderChecklistForm(todo);
+    checklistContainer.append(CheckListForm);
     target.appendChild(checklistContainer);
   };
 
