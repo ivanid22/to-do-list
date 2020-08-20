@@ -4,11 +4,15 @@ const CheckistItem = (checkistItemtitle) => {
   const eventAggregator = getAggregatorInstance();
   let title = checkistItemtitle;
   let status = false;
-  const id = Date.now();
+  let id = Date.now();
 
   const setTitle = (val) => {
     title = val;
     eventAggregator.publish('checklistItemUpdated', id);
+  };
+
+  const setId = (newId) => {
+    id = newId;
   };
 
   const getTitle = () => title;
@@ -16,8 +20,15 @@ const CheckistItem = (checkistItemtitle) => {
     status = !status;
     eventAggregator.publish('checklistItemUpdated', id);
   };
+
+  const setStatus = (val) => {
+    status = val;
+  };
+
   const getStatus = () => status;
   const getId = () => id;
+
+  const serialize = () => ({ title, status, id });
 
   return {
     setTitle,
@@ -25,6 +36,9 @@ const CheckistItem = (checkistItemtitle) => {
     toggleStatus,
     getStatus,
     getId,
+    serialize,
+    setStatus,
+    setId,
   };
 };
 

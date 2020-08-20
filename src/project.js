@@ -5,16 +5,20 @@ const Project = (projectname) => {
   let name = projectname;
 
   const todos = [];
-  const id = Date.now();
+  let id = Date.now();
 
   const getName = () => name;
   const setName = (val) => { name = val; };
   const getTodos = () => todos;
   const getId = () => id;
 
+  const setId = (newId) => {
+    id = newId;
+  };
+
   const addTodo = (todo) => {
     todos.push(todo);
-    eventsAggregator.publish('addedTodo', todo);
+    //eventsAggregator.publish('addedTodo', todo);
   };
 
   const getTodo = (id) => {
@@ -32,6 +36,18 @@ const Project = (projectname) => {
     return false;
   };
 
+  const serialize = () => {
+    const serializedTodos = [];
+    todos.forEach(todo => {
+      serializedTodos.push(todo.serialize());
+    });
+    return {
+      name,
+      id,
+      todos: serializedTodos,
+    };
+  };
+
   return {
     getName,
     setName,
@@ -40,6 +56,8 @@ const Project = (projectname) => {
     addTodo,
     removeTodo,
     getTodo,
+    serialize,
+    setId,
   };
 };
 

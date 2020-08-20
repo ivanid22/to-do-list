@@ -10,7 +10,11 @@ const Todo = (todotitle) => {
   let status = false;
   const checklists = [];
   let notes = '';
-  const id = Date.now();
+  let id = Date.now();
+
+  const setId = (newId) => {
+    id = newId;
+  };
 
   const getTitle = () => title;
   const setTitle = val => {
@@ -85,6 +89,22 @@ const Todo = (todotitle) => {
 
   const getId = () => id;
 
+  const serialize = () => {
+    const serializedChecklistItems = [];
+    checklists.forEach(checklistItem => {
+      serializedChecklistItems.push(checklistItem.serialize());
+    });
+    return {
+      title,
+      id,
+      description,
+      dueDate,
+      priority,
+      status,
+      checklists: serializedChecklistItems,
+    };
+  };
+
   return {
     getTitle,
     setTitle,
@@ -104,6 +124,8 @@ const Todo = (todotitle) => {
     setNotes,
     getId,
     getPriorityString,
+    setId,
+    serialize,
   };
 };
 

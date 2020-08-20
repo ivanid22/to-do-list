@@ -73,3 +73,9 @@ eventAggregator.subscribe('checkboxChanged', (data) => {
   data.checklistItem.toggleStatus();
   displayModule.renderTodos(projects.getActiveProject());
 });
+
+eventAggregator.subscribe('loadedLocalStorage', () => {
+  const activeId = projects.getActiveProject() ? projects.getActiveProject().getId() : null;
+  displayModule.renderProjects(projects.getProjects(), activeId);
+  displayModule.renderTodos(projects.getActiveProject());
+});

@@ -1,10 +1,62 @@
+import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
+import Project from "./project";
+import CheckistItem from "./checklistItem";
+import Todo from './todo';
+
 const ProjectCollection = () => {
-  const projects = [];
+  let projects = [];
   let activeProject = null;
+  const eventsAggregator = getAggregatorInstance();
+
+  const serialize = () => {
+    const serializedProjects = [];
+    projects.forEach(project => {
+      serializedProjects.push(project.serialize());
+    });
+    return {
+      activeProject: activeProject.serialize(),
+      projects: serializedProjects,
+    };
+  };
 
   const getProject = (id) => {
     const found = projects.find((project) => project.getId() === id);
     return found;
+  };
+
+  const fetchLocalStorageData = () => {
+    projects = [];
+    const data = JSON.parse(localStorage.getItem('projects'));
+    data.projects.forEach(storedProject => {
+      const tempProject = Project(storedProject.name);
+      if (storedProject.todos) {
+        storedProject.todos.forEach(storedTodo => {
+          const tempTodo = Todo(storedTodo.title);
+          if (storedTodo.checklistItems) {
+            storedTodo.checklistItems.forEach(storedChecklistItem => {
+              const tempChecklistItem = CheckistItem(storedChecklistItem.title);
+              tempChecklistItem.setId(storedChecklistItem.id);
+              tempChecklistItem.setStatus(storedChecklistItem.getStatus());
+              tempTodo.addCheckListItem(tempChecklistItem);
+            });
+          }
+          tempTodo.setId(storedTodo.id);
+          tempTodo.setDescription(storedTodo.description);
+          tempTodo.setDueDate(storedTodo.dueDate);
+          tempTodo.setPriority(storedTodo.priority);
+          tempProject.addTodo(tempTodo);
+        });
+      }
+      tempProject.setId(storedProject.id);
+      tempProject.setName(storedProject.name);
+      projects.push(tempProject);
+    });
+    activeProject = getProject(data.activeProject.id);
+    eventsAggregator.publish('loadedLocalStorage', null);
+  };
+
+  const updateLocalStorage = () => {
+    localStorage.setItem('projects', JSON.stringify(serialize()));
   };
 
   const getProjects = () => projects;
@@ -52,6 +104,9 @@ const ProjectCollection = () => {
     getLength,
     getLastProject,
     getProjects,
+    serialize,
+    updateLocalStorage,
+    fetchLocalStorageData,
     projects,
   };
 };
