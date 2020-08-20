@@ -1,6 +1,6 @@
 import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
-import Project from "./project";
-import CheckistItem from "./checklistItem";
+import Project from './project';
+import CheckistItem from './checklistItem';
 import Todo from './todo';
 
 const ProjectCollection = () => {
@@ -92,7 +92,7 @@ const ProjectCollection = () => {
   const getLastProject = () => {
     if (projects.length === 0) return null;
     return projects[projects.length - 1];
-  }
+  };
 
   const getActiveProject = () => activeProject;
   const setActiveProject = (project) => {

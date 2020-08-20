@@ -19,25 +19,7 @@ const eventAggregator = getAggregatorInstance();
 
 window.moment = moment;
 
-/*const deleteProject = (id) => {
-  let index = null;
-  projects.forEach(project => {
-    if (project.getId() === parseInt(id, 10)) {
-      index = projects.indexOf(project);
-      console.log(index);
-    }
-  });
-  console.log(`Index to delete: ${index}`)
-  projects.splice(index, 1);
-};
-
-const findProjectbyId = (id) => {
-  const found = projects.find(project => project.getId() === id);
-  return found;
-};*/
-
 window.onload = () => {
-  //displayModule.renderProjects(projects);
   displayModule.initListeners();
   eventAggregator.publish('appInitialized');
   window.projects = projects;

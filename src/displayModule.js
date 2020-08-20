@@ -1,12 +1,10 @@
-import { getAggregatorInstance } from "@ivanid22/js-event-aggregator";
+import { getAggregatorInstance } from '@ivanid22/js-event-aggregator';
 import moment from 'moment';
 
 const displayModule = (() => {
   const eventAggregator = getAggregatorInstance();
 
-  const validTitle = (val) => {
-    return /.+/.test(val);
-  };
+  const validTitle = (val) => /.+/.test(val);
 
   const validDate = (dateString) => {
     const date = moment(dateString).valueOf();
@@ -46,7 +44,7 @@ const displayModule = (() => {
   };
 
   const displayProjectTitle = (val) => {
-    const titleElement = document.querySelector('.selected-project-title')
+    const titleElement = document.querySelector('.selected-project-title');
     titleElement.textContent = val;
   };
 
@@ -73,7 +71,7 @@ const displayModule = (() => {
       };
 
       projectDel.onclick = () => {
-        const parent = projectDel.parentElement.attributes[1].value
+        const parent = projectDel.parentElement.attributes[1].value;
         eventAggregator.publish('deletedProject', parent);
       };
     });
@@ -94,7 +92,6 @@ const displayModule = (() => {
     input.setAttribute('type', 'text');
     input.setAttribute('placeholder', 'New Checkitem');
     const button = createDOMElement('button is-small', 'a', 'Add');
-    
     const showForm = createDOMElement('button is-small', 'a', '+');
     showForm.onclick = () => {
       showForm.classList.toggle('hidden');
@@ -141,7 +138,7 @@ const displayModule = (() => {
     const cardPad = createDOMElement('card-padding is-3 column', 'div');
     const card = createDOMElement('card', 'div');
     const cardHeader = createDOMElement('card-header', 'header');
-    const cardTitle = createDOMElement('card-header-title','p', todo.getTitle());
+    const cardTitle = createDOMElement('card-header-title', 'p', todo.getTitle());
 
     const todoInfo = createDOMElement('card-content todo-due-date', 'div');
     const todoPriority = createDOMElement('has-text-danger', 'p', todo.getPriorityString());

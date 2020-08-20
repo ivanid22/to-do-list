@@ -1,12 +1,13 @@
-body{
+body {
   padding-top: 1em;
 }
 
 .checklist-item {
   width: 100%;
+  padding-bottom: 0.5em;
 }
 
-.checklist-item > input{
+.checklist-item > input {
   margin-right: 0.5em;
 }
 
@@ -23,15 +24,11 @@ body{
   width: 100%;
 }
 
-.checklist-item {
-  padding-bottom: 0.5em;
-}
-
 .column-padding {
   padding: 0 1em;
 }
 
-.title-container{
+.title-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -40,6 +37,7 @@ body{
 
 i {
   cursor: pointer;
+  margin-right: 0.1em;
 }
 
 .hidden {
@@ -47,5 +45,5 @@ i {
 }
 
 .checklist-item > input:checked {
-  color: darkgray;  
+  color: darkgray;
 }

@@ -67,7 +67,6 @@ const Todo = (todotitle) => {
   };
 
   const getPriorityString = () => {
-    console.log(typeof (priority));
     switch (priority) {
       case 1:
         return 'Low';
