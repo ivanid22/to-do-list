@@ -16,9 +16,9 @@ const Project = (projectname) => {
     id = newId;
   };
 
-  const addTodo = (todo) => {
+  const addTodo = (todo, publish) => {
     todos.push(todo);
-    //eventsAggregator.publish('addedTodo', todo);
+    if (publish) eventsAggregator.publish('addedTodo', todo);
   };
 
   const getTodo = (id) => {

@@ -50,7 +50,7 @@ eventAggregator.subscribe('submittedTodo', (data) => {
   newTodo.setDueDate(moment(data.duedate).valueOf());
   newTodo.setPriority(parseInt(data.priority, 10));
   if (projects.getActiveProject()) {
-    projects.getActiveProject().addTodo(newTodo);
+    projects.getActiveProject().addTodo(newTodo, true);
   }
 });
 

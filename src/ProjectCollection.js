@@ -32,11 +32,11 @@ const ProjectCollection = () => {
       if (storedProject.todos) {
         storedProject.todos.forEach(storedTodo => {
           const tempTodo = Todo(storedTodo.title);
-          if (storedTodo.checklistItems) {
-            storedTodo.checklistItems.forEach(storedChecklistItem => {
+          if (storedTodo.checklists) {
+            storedTodo.checklists.forEach(storedChecklistItem => {
               const tempChecklistItem = CheckistItem(storedChecklistItem.title);
               tempChecklistItem.setId(storedChecklistItem.id);
-              tempChecklistItem.setStatus(storedChecklistItem.getStatus());
+              tempChecklistItem.setStatus(storedChecklistItem.status);
               tempTodo.addCheckListItem(tempChecklistItem);
             });
           }
@@ -44,7 +44,7 @@ const ProjectCollection = () => {
           tempTodo.setDescription(storedTodo.description);
           tempTodo.setDueDate(storedTodo.dueDate);
           tempTodo.setPriority(storedTodo.priority);
-          tempProject.addTodo(tempTodo);
+          tempProject.addTodo(tempTodo, false);
         });
       }
       tempProject.setId(storedProject.id);
