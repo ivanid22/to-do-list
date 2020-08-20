@@ -27,31 +27,37 @@ const ProjectCollection = () => {
   const fetchLocalStorageData = () => {
     projects = [];
     const data = JSON.parse(localStorage.getItem('projects'));
-    data.projects.forEach(storedProject => {
-      const tempProject = Project(storedProject.name);
-      if (storedProject.todos) {
-        storedProject.todos.forEach(storedTodo => {
-          const tempTodo = Todo(storedTodo.title);
-          if (storedTodo.checklists) {
-            storedTodo.checklists.forEach(storedChecklistItem => {
-              const tempChecklistItem = CheckistItem(storedChecklistItem.title);
-              tempChecklistItem.setId(storedChecklistItem.id);
-              tempChecklistItem.setStatus(storedChecklistItem.status);
-              tempTodo.addCheckListItem(tempChecklistItem);
-            });
-          }
-          tempTodo.setId(storedTodo.id);
-          tempTodo.setDescription(storedTodo.description);
-          tempTodo.setDueDate(storedTodo.dueDate);
-          tempTodo.setPriority(storedTodo.priority);
-          tempProject.addTodo(tempTodo, false);
-        });
-      }
-      tempProject.setId(storedProject.id);
-      tempProject.setName(storedProject.name);
-      projects.push(tempProject);
-    });
-    activeProject = getProject(data.activeProject.id);
+    if (data) {
+      data.projects.forEach(storedProject => {
+        const tempProject = Project(storedProject.name);
+        if (storedProject.todos) {
+          storedProject.todos.forEach(storedTodo => {
+            const tempTodo = Todo(storedTodo.title);
+            if (storedTodo.checklists) {
+              storedTodo.checklists.forEach(storedChecklistItem => {
+                const tempChecklistItem = CheckistItem(storedChecklistItem.title);
+                tempChecklistItem.setId(storedChecklistItem.id);
+                tempChecklistItem.setStatus(storedChecklistItem.status);
+                tempTodo.addCheckListItem(tempChecklistItem);
+              });
+            }
+            tempTodo.setId(storedTodo.id);
+            tempTodo.setDescription(storedTodo.description);
+            tempTodo.setDueDate(storedTodo.dueDate);
+            tempTodo.setPriority(storedTodo.priority);
+            tempProject.addTodo(tempTodo, false);
+          });
+        }
+        tempProject.setId(storedProject.id);
+        tempProject.setName(storedProject.name);
+        projects.push(tempProject);
+      });
+      activeProject = getProject(data.activeProject.id);
+    } else {
+      const defaultProject = Project('Default project');
+      projects.push(defaultProject);
+      activeProject = defaultProject;
+    }
     eventsAggregator.publish('loadedLocalStorage', null);
   };
 

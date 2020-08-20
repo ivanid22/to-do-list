@@ -215,6 +215,7 @@ const displayModule = (() => {
     const newTodoButton = document.querySelector('.add-todo-button');
     newTodoButton.onclick = () => {
       resetNewTodoFields();
+      document.querySelector('.new-todo-date').value = moment().valueOf();
       eventAggregator.publish('clickedNewTodo');
     };
     newTodoModalListeners();

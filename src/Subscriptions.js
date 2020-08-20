@@ -41,6 +41,7 @@ eventAggregator.subscribe('selectedProject', (id) => {
 });
 
 eventAggregator.subscribe('clickedNewTodo', () => {
+  document.querySelector('.new-todo-date').value = moment().format('yyyy-MM-DDThh:mm');
   document.querySelector('.new-todo-modal').classList.add('is-active');
 });
 
