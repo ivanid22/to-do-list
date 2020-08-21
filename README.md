@@ -15,7 +15,7 @@ The assignment for this project can be found [here](https://www.theodinproject.c
 
   ## Authors
 
-    👤 **Franco Rosa**
+  👤 **Franco Rosa**
 
   - Github: [@Franco Rosa](https://github.com/FrancoRosa)
   - Twitter: [@francomaker](https://twitter.com/francomaker)
