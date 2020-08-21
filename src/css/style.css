@@ -1,0 +1,49 @@
+body {
+  padding-top: 1em;
+}
+
+.checklist-item {
+  width: 100%;
+  padding-bottom: 0.5em;
+}
+
+.checklist-item > input {
+  margin-right: 0.5em;
+}
+
+.card-content {
+  padding-top: 0;
+}
+
+.project-name {
+  display: flex;
+  justify-content: stretch;
+}
+
+.project-name > a {
+  width: 100%;
+}
+
+.column-padding {
+  padding: 0 1em;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 1em;
+}
+
+i {
+  cursor: pointer;
+  margin-right: 0.1em;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.checklist-item > input:checked {
+  color: darkgray;
+}

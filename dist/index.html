@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ToDo List</title>
+  <script src="main.js"></script>
+  <script src="https://kit.fontawesome.com/c0ee282a11.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="container">
+  </div>
+  
+  <div class="columns">
+    <div class="column is-3">
+      <div class="column-padding">
+        <h2 class="title is-2">Projects</h2>
+        <aside class="menu">
+          <ul class="menu-list project-container">
+          </ul>
+          <br>
+          <div class="field has-addons">
+            <p class="control">
+              <input class="input add-project-input" type="text" placeholder="New Project">
+            </p>
+            <p class="control">
+              <a class="button is-link add-project-button">Add</a>
+            </p>
+          </div>
+        </aside>
+      </div>
+      
+    </div>
+    <div class="column is-9">
+      <div class="title-container">
+        <h2 class="title is-2 selected-project-title">Todo</h2>
+          <button class="button add-todo-button">
+            <i class="fas fa-plus fa-2x"></i>
+            Add to-do
+          </button>
+      </div>
+      <div class="todos-container columns is-multiline">
+        <div class="card-padding is-3 column">
+          <div class="card">
+            <header class="card-header">
+              <p class="card-header-title">
+                First To-do
+              </p>
+              <button class="delete delete-todo-button"></button>  
+            </header>
+            <div class="card-content todo-due-date">
+              <p class="has-text-danger">Important</p>
+              <p class="has-text-grey">Task due</p>
+              
+            </div>
+            <div class="card-content">
+              <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Neque excepturi adipisci solut</p>
+            </div>
+            <div class="card-content checklist-container">
+              <label class="checkbox checklist-item">
+                <input type="checkbox">
+                Remember me
+              </label>
+              <label class="checkbox checklist-item">
+                <input type="checkbox">
+                Remember me
+              </label>
+              <label class="checkbox checklist-item">
+                <input type="checkbox">
+                Remember me
+              </label>
+              <div class="field has-addons hidden">
+                <p class="control"><input class="input is-small" type="text" placeholder="New checkbox"></p>
+                <p class="control"><a class="button is-small">Add</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-padding is-3 column">
+    
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="new-todo-modal modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <h2 class="subtitle is-3">New todo</h2>
+      <div class="field">
+        <label class="label">Title</label>
+        <div class="control">
+          <input class="input new-todo-title new-todo-field" type="text" placeholder="Title">
+        </div>
+      </div>
+      
+           
+      <div class="field">
+        <label class="label">Decription</label>
+        <div class="control">
+          <textarea class="textarea new-todo-desc new-todo-field" placeholder="To-do description"></textarea>
+        </div>
+      </div>
+      
+      <div class="field">
+        <label class="label">Due date</label>
+        <div class="control">
+          <input class="input new-todo-date new-todo-field" type="datetime-local" value="2018-06-12T19:30">
+        </div>
+      </div>
+
+      <div class="field">
+        <label class="label">Priority</label>
+        <div class="control">
+          <div class="select">
+            <select class="new-todo-priority new-todo-field">
+              <option value="1">Low</option>
+              <option value="2">Medium</option>
+              <option value="3">High</option>
+              <option value="4">Critical</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="field is-grouped">
+        <div class="control">
+          <button class="button is-link submit-todo-button">Submit</button>
+        </div>
+        <div class="control">
+          <button class="button is-link is-light close-todo-modal">Cancel</button>
+        </div>
+      </div>
+
+      
+    <button class="modal-close is-large close-todo-modal" aria-label="close"></button>
+  </div>
+
+</body>
+</html>
+
